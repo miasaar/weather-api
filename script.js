@@ -141,7 +141,6 @@ function setWeatherVisuals(weather) {
         }, 180);
     }
     else if (weather.condition === "CLEAR") {
-        // Static clear sky (no animation needed)
         if (weather.isDay) {
             canvas.textContent = "☀";
         } else {

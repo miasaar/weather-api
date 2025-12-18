@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>ASCII Weather Atlas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Monospace font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css" />
+
+</head>
+
+<body>
+
+    <!-- ASCII BACKGROUND LAYER -->
+    <pre id="ascii-canvas" aria-hidden="true"></pre>
+
+    <!-- LOCATION SELECTION -->
+    <div id="locations">
+        <!-- City names will be added here by JavaScript -->
+    </div>
+
+    <!-- City label (shown after clicking) -->
+    <div class="city-label" id="cityLabel" style="display: none;"></div>
+
+    <!-- Info box (shown after clicking) -->
+    <div class="info-box" id="infoBox" style="display: none;">
+        <div>coordinates: <span id="w-lat"></span>° N, <span id="w-lon"></span>° W</div>
+        <div>temperature: <span id="w-temp"></span></div>
+        <div>conditions: <span id="w-code"></span></div>
+        <div>time: <span id="w-day"></span></div>
+    </div>
+
+    <!-- Back button -->
+    <button id="back" style="display: none;">←</button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

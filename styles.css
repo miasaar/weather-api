@@ -106,7 +106,7 @@ body[data-time="night"] #back {
 }
 
 .floating-city {
-    position: absolute;
+    position: fixed;
     font-size: 24px;
     padding: 10px 20px;
     border: 2px solid white;
@@ -116,11 +116,14 @@ body[data-time="night"] #back {
     animation: float 15s infinite ease-in-out;
     z-index: 8;
     text-transform: lowercase;
-    margin: -20px 0 0 -20px;
 }
 
 .floating-city:hover {
     background: rgba(255, 255, 255, 0.1);
+    color: rgb(244, 244, 248);
+    text-shadow: 0 0 20px #b3acb4,
+        0 0 40px #a39ca0,
+        0 0 60px #a39da0;
 }
 
 @keyframes float {

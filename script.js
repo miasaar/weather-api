@@ -9,31 +9,47 @@ const wDay = document.getElementById("w-day");
 
 // Change your getWeatherForLocation function to use mock data:
 async function getWeatherForLocation(lat, lon, name) {
-    // Mock data (replace with real API later)
-    const mockData = {
-        "Tokyo": { temp: 18, wind: 12, code: 61, isDay: 1 },
-        "Berlin": { temp: 8, wind: 15, code: 3, isDay: 1 },
-        "New York": { temp: 12, wind: 20, code: 71, isDay: 1 },
-        "London": { temp: 10, wind: 18, code: 45, isDay: 0 }
-    };
+    try {
+        // Call the Open-Meteo API
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,windspeed_10m,weathercode,is_day&timezone=auto`;
 
-    const mock = mockData[name];
-    let condition = "UNKNOWN";
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-    if (mock.code === 0) condition = "CLEAR";
-    else if (mock.code >= 1 && mock.code <= 3) condition = "CLOUDY";
-    else if (mock.code >= 51 && mock.code <= 67) condition = "RAIN";
-    else if (mock.code >= 71 && mock.code <= 77) condition = "SNOW";
-    else if (mock.code >= 45 && mock.code <= 48) condition = "FOG";
-    else if (mock.code >= 95) condition = "STORM";
+        const data = await response.json();
+        const current = data.current;
 
-    return {
-        location: name,
-        temperature: mock.temp,
-        wind: mock.wind,
-        condition: condition,
-        isDay: Boolean(mock.isDay)
-    };
+        // Convert weather code to condition
+        let condition = "UNKNOWN";
+        const code = current.weathercode;
+
+        if (code === 0) condition = "CLEAR";
+        else if (code >= 1 && code <= 3) condition = "CLOUDY";
+        else if (code >= 51 && code <= 67) condition = "RAIN";
+        else if (code >= 71 && code <= 77) condition = "SNOW";
+        else if (code >= 45 && code <= 48) condition = "FOG";
+        else if (code >= 95) condition = "STORM";
+
+        return {
+            location: name,
+            temperature: Math.round(current.temperature_2m),
+            wind: Math.round(current.windspeed_10m),
+            condition: condition,
+            isDay: Boolean(current.is_day)
+        };
+    } catch (error) {
+        console.error("Error fetching weather:", error);
+        // Return mock data as fallback
+        return {
+            location: name,
+            temperature: 15,
+            wind: 10,
+            condition: "UNKNOWN",
+            isDay: true
+        };
+    }
 }
 
 const locations = document.getElementById("locations");
@@ -82,8 +98,8 @@ function setWeatherVisuals(weather) {
     if (weather.condition === "RAIN") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 30; r++) {
-                for (let c = 0; c < 80; c++) {
+            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
+                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
                     ascii += Math.random() < 0.3 ? "|" : " ";
                 }
                 ascii += "\n";
@@ -94,8 +110,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "SNOW") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 30; r++) {
-                for (let c = 0; c < 80; c++) {
+            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
+                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
                     ascii += Math.random() < 0.2 ? "*" : " ";
                 }
                 ascii += "\n";
@@ -106,9 +122,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "STORM") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 30; r++) {
-                for (let c = 0; c < 80; c++) {
-                    // More intense rain + occasional lightning "/"
+            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
+                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
                     ascii += Math.random() < 0.5 ? "|" : " ";
                 }
                 ascii += "\n";
@@ -119,8 +134,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "FOG") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 30; r++) {
-                for (let c = 0; c < 80; c++) {
+            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
+                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
                     ascii += Math.random() < 0.15 ? "░" : " ";
                 }
                 ascii += "\n";
@@ -131,8 +146,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "CLOUDY") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 30; r++) {
-                for (let c = 0; c < 80; c++) {
+            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
+                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
                     ascii += Math.random() < 0.1 ? "~" : " ";
                 }
                 ascii += "\n";
@@ -141,12 +156,63 @@ function setWeatherVisuals(weather) {
         }, 180);
     }
     else if (weather.condition === "CLEAR") {
+        const rows = 50;
+        const cols = 160;
+        const sunArt = [
+            "      ;   :   ;",
+            "   .   \\_,!,_/   ,",
+            "    `.,'     `.,'",
+            "     /         \\",
+            "~ -- :         : -- ~",
+            "     \\         /",
+            "    ,'`._   _.'`.",
+            "   '   / `!` \\   `",
+            "      ;   :   ;"
+        ];
+
         if (weather.isDay) {
-            canvas.textContent = "☀";
+            // Initialize a single sun starting somewhere
+            let sun = { row: 5, col: 5 }; // top-left starting position
+
+            asciiInterval = setInterval(() => {
+                // Create empty canvas
+                let ascii = Array(rows).fill("").map(() => " ".repeat(cols));
+
+                // Overlay sunArt onto ascii canvas
+                sunArt.forEach((line, i) => {
+                    const r = sun.row + i;
+                    if (r < rows) {
+                        let base = ascii[r].split("");
+                        for (let c = 0; c < line.length; c++) {
+                            const colPos = (sun.col + c) % cols; // wrap horizontally
+                            base[colPos] = line[c];
+                        }
+                        ascii[r] = base.join("");
+                    }
+                });
+
+                // Update sun position (move right)
+                sun.col = (sun.col + 1) % cols;
+
+                // Render
+                canvas.textContent = ascii.join("\n");
+            }, 200);
+
         } else {
-            canvas.textContent = "★  ★   ★\n  ★    ★";
+            // Night stars
+            asciiInterval = setInterval(() => {
+                let ascii = "";
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        ascii += Math.random() < 0.1 ? "★" : " ";
+                    }
+                    ascii += "\n";
+                }
+                canvas.textContent = ascii;
+            }, 500);
         }
     }
+
 }
 
 
@@ -174,8 +240,8 @@ function createFloatingCities() {
         cityElement.dataset.lon = city.lon;
 
         // Random starting position
-        cityElement.style.left = Math.random() * 80 + 10 + "%";
-        cityElement.style.top = Math.random() * 80 + 10 + "%";
+        cityElement.style.left = Math.random() * 60 + 10 + "%";
+        cityElement.style.top = Math.random() * 70 + 10 + "%";
 
         // Random animation delay
         cityElement.style.animationDelay = Math.random() * 3 + "s";

@@ -21,26 +21,65 @@ body[data-time="day"] {
 
 body[data-time="day"] #ascii-canvas {
     color: black;
+    background-color: white;
 }
 
 body[data-time="day"] .floating-city {
     color: black;
     border-color: black;
+    background-color: white;
 }
 
 body[data-time="day"] .city-label {
     color: black;
     border-color: black;
+    background-color: white;
 }
 
 body[data-time="day"] .info-box {
     color: black;
     border-color: black;
+    background-color: white;
 }
 
 body[data-time="day"] #back {
     color: black;
     border-color: black;
+    background-color: white;
+}
+
+body[data-time="night"] {
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+body[data-time="night"] #ascii-canvas {
+    color: rgb(255, 255, 255);
+    background-color: black;
+}
+
+body[data-time="night"] .floating-city {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    border-color: white;
+}
+
+body[data-time="night"] .city-label {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    border-color: white;
+}
+
+body[data-time="night"] .info-box {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    border-color: white;
+}
+
+body[data-time="night"] #back {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    border-color: rgb(255, 255, 255);
 }
 
 /* ASCII canvas background */
@@ -77,6 +116,7 @@ body[data-time="day"] #back {
     animation: float 15s infinite ease-in-out;
     z-index: 8;
     text-transform: lowercase;
+    margin: -20px 0 0 -20px;
 }
 
 .floating-city:hover {
@@ -119,7 +159,6 @@ body[data-time="day"] #back {
     border: 2px solid white;
     background: transparent;
     z-index: 10;
-    text-transform: lowercase;
 }
 
 /* Info box in center */
@@ -133,8 +172,6 @@ body[data-time="day"] #back {
     background: transparent;
     z-index: 10;
     font-size: 18px;
-    line-height: 1.8;
-    text-transform: lowercase;
 }
 
 /* Back button */

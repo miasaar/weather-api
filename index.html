@@ -15,31 +15,35 @@
 
 </head>
 
-<body>
+<header>
+    <h1>favs</h1>
+    <p></p>
 
-    <!-- ASCII BACKGROUND LAYER -->
-    <pre id="ascii-canvas" aria-hidden="true"></pre>
+    <body>
 
-    <!-- LOCATION SELECTION -->
-    <div id="locations">
-        <!-- City names will be added here by JavaScript -->
-    </div>
+        <!-- ASCII BACKGROUND LAYER -->
+        <pre id="ascii-canvas" aria-hidden="true"></pre>
 
-    <!-- City label (shown after clicking) -->
-    <div class="city-label" id="cityLabel" style="display: none;"></div>
+        <!-- LOCATION SELECTION -->
+        <div id="locations">
+            <!-- City names will be added here by JavaScript -->
+        </div>
 
-    <!-- Info box (shown after clicking) -->
-    <div class="info-box" id="infoBox" style="display: none;">
-        <div>coordinates: <span id="w-lat"></span>° N, <span id="w-lon"></span>° W</div>
-        <div>temperature: <span id="w-temp"></span></div>
-        <div>conditions: <span id="w-code"></span></div>
-        <div>time: <span id="w-day"></span></div>
-    </div>
+        <!-- City label (shown after clicking) -->
+        <div class="city-label" id="cityLabel" style="display: none;"></div>
 
-    <!-- Back button -->
-    <button id="back" style="display: none;">←</button>
+        <!-- Info box (shown after clicking) -->
+        <div class="info-box" id="infoBox" style="display: none;">
+            <div>coordinates: <span id="w-lat"></span>° N, <span id="w-lon"></span>° W</div>
+            <div>temperature: <span id="w-temp"></span></div>
+            <div>conditions: <span id="w-code"></span></div>
+            <div>time: <span id="w-day"></span></div>
+        </div>
 
-    <script src="script.js"></script>
-</body>
+        <!-- Back button -->
+        <button id="back" style="display: none;">←</button>
+
+        <script src="script.js"></script>
+    </body>
 
 </html>

@@ -5,6 +5,16 @@
     box-sizing: border-box;
 }
 
+header {
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 12px;
+    border: 2px solid white;
+    width: fit-content;
+    margin-left: auto;
+
+}
+
 body {
     font-family: 'JetBrains Mono', monospace;
     background: black;
@@ -116,6 +126,7 @@ body[data-time="night"] #back {
     animation: float 15s infinite ease-in-out;
     z-index: 8;
     text-transform: lowercase;
+    line-height: 1.5;
 }
 
 .floating-city:hover {
@@ -162,6 +173,7 @@ body[data-time="night"] #back {
     border: 2px solid white;
     background: transparent;
     z-index: 10;
+    text-align: left;
 }
 
 /* Info box in center */
@@ -175,6 +187,8 @@ body[data-time="night"] #back {
     background: transparent;
     z-index: 10;
     font-size: 18px;
+    text-align: left;
+    line-height: 2;
 }
 
 /* Back button */

@@ -227,7 +227,16 @@ function createFloatingCities() {
         { name: "Tokyo", lat: 35.68, lon: 139.69 },
         { name: "Berlin", lat: 52.52, lon: 13.41 },
         { name: "New York", lat: 40.71, lon: -74.01 },
-        { name: "London", lat: 51.50, lon: -0.12 }
+        { name: "London", lat: 51.50, lon: -0.12 },
+        { name: "Sydney", lat: -33.87, lon: 151.21 },
+        { name: "Cairo", lat: 30.04, lon: 31.24 },
+        { name: "Rio de Janeiro", lat: -22.91, lon: -43.17 },
+        { name: "Toronto", lat: 43.65, lon: -79.38 },
+        { name: "Mumbai", lat: 19.07, lon: 72.88 },
+        { name: "Paris", lat: 48.85, lon: 2.35 },
+        { name: "Tallinn", lat: 59.44, lon: 24.75 },
+        { name: "San Francisco", lat: 37.77, lon: -122.42 }
+
     ];
 
     const container = document.getElementById("locations");

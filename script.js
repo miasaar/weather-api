@@ -8,6 +8,7 @@ const wCode = document.getElementById("w-code");
 const wDay = document.getElementById("w-day");
 
 
+
 async function getWeatherForLocation(lat, lon, name) {
     try {
         // Call the Open-Meteo API

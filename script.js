@@ -7,6 +7,8 @@ const wTemp = document.getElementById("w-temp");
 const wCode = document.getElementById("w-code");
 const wDay = document.getElementById("w-day");
 
+
+
 // Change your getWeatherForLocation function to use mock data:
 async function getWeatherForLocation(lat, lon, name) {
     try {
@@ -230,7 +232,6 @@ function createFloatingCities() {
         { name: "London", lat: 51.50, lon: -0.12 },
         { name: "Sydney", lat: -33.87, lon: 151.21 },
         { name: "Cairo", lat: 30.04, lon: 31.24 },
-        { name: "Rio de Janeiro", lat: -22.91, lon: -43.17 },
         { name: "Toronto", lat: 43.65, lon: -79.38 },
         { name: "Mumbai", lat: 19.07, lon: 72.88 },
         { name: "Paris", lat: 48.85, lon: 2.35 },
@@ -244,7 +245,6 @@ function createFloatingCities() {
         { name: "Buenos Aires", lat: -34.61, lon: -58.38 },
         { name: "Zurich", lat: 47.38, lon: 8.54 },
         { name: "Luxembourg", lat: 49.61, lon: 6.13 },
-
 
     ];
 

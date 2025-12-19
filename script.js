@@ -8,8 +8,6 @@ const wCode = document.getElementById("w-code");
 const wDay = document.getElementById("w-day");
 
 
-
-// Change your getWeatherForLocation function to use mock data:
 async function getWeatherForLocation(lat, lon, name) {
     try {
         // Call the Open-Meteo API

@@ -106,7 +106,7 @@ body[data-time="night"] #back {
     pointer-events: none;
 }
 
-/* Floating city names */
+/* floating city names */
 #locations {
     position: fixed;
     width: 100%;
@@ -157,12 +157,12 @@ body[data-time="night"] #back {
     }
 }
 
-/* Center box - hidden initially */
+/* center box - hidden */
 #center-box {
     display: none;
 }
 
-/* City label at top center */
+/* city label at top */
 .city-label {
     position: fixed;
     top: 50px;
@@ -176,7 +176,7 @@ body[data-time="night"] #back {
     text-align: left;
 }
 
-/* Info box in center */
+/* info box */
 .info-box {
     position: fixed;
     top: 50%;
@@ -191,7 +191,7 @@ body[data-time="night"] #back {
     line-height: 2;
 }
 
-/* Back button */
+/* back btn */
 #back {
     position: fixed;
     top: 30px;

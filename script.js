@@ -235,7 +235,16 @@ function createFloatingCities() {
         { name: "Mumbai", lat: 19.07, lon: 72.88 },
         { name: "Paris", lat: 48.85, lon: 2.35 },
         { name: "Tallinn", lat: 59.44, lon: 24.75 },
-        { name: "San Francisco", lat: 37.77, lon: -122.42 }
+        { name: "San Francisco", lat: 37.77, lon: -122.42 },
+        { name: "Copenhagen", lat: 55.68, lon: 12.57 },
+        { name: "Stockholm", lat: 59.33, lon: 18.07 },
+        { name: "Helsinki", lat: 60.17, lon: 24.94 },
+        { name: "Cape Town", lat: -33.93, lon: 18.42 },
+        { name: "Melbourne", lat: -37.81, lon: 144.96 },
+        { name: "Buenos Aires", lat: -34.61, lon: -58.38 },
+        { name: "Zurich", lat: 47.38, lon: 8.54 },
+        { name: "Luxembourg", lat: 49.61, lon: 6.13 },
+
 
     ];
 

@@ -7,7 +7,56 @@ const wTemp = document.getElementById("w-temp");
 const wCode = document.getElementById("w-code");
 const wDay = document.getElementById("w-day");
 
+// Favorites management
+let favorites = JSON.parse(localStorage.getItem('weatherFavorites')) || [];
 
+function saveFavorites() {
+    localStorage.setItem('weatherFavorites', JSON.stringify(favorites));
+}
+
+function addToFavorites(name, lat, lon) {
+    if (!favorites.some(f => f.name === name)) {
+        favorites.push({ name, lat, lon });
+        saveFavorites();
+        updateFavoritesPanel();
+    }
+}
+
+function removeFromFavorites(name) {
+    favorites = favorites.filter(f => f.name !== name);
+    saveFavorites();
+    updateFavoritesPanel();
+}
+
+function isFavorite(name) {
+    return favorites.some(f => f.name === name);
+}
+
+function updateFavoritesPanel() {
+    const favList = document.getElementById("favourites-list");
+    favList.innerHTML = '';
+
+    if (favorites.length === 0) {
+        favList.innerHTML = '<span style="opacity: 0.5;">no favourites yet</span>';
+        return;
+    }
+
+    favorites.forEach(fav => {
+        const favBtn = document.createElement("button");
+        favBtn.className = "favourite-item";
+        favBtn.textContent = fav.name.toLowerCase();
+        favBtn.dataset.lat = fav.lat;
+        favBtn.dataset.lon = fav.lon;
+        favBtn.dataset.name = fav.name;
+
+        favBtn.addEventListener("click", async () => {
+            const weather = await getWeatherForLocation(fav.lat, fav.lon, fav.name);
+            showWeatherView(fav.name, fav.lat, fav.lon, weather);
+        });
+
+        favList.appendChild(favBtn);
+    });
+}
 
 async function getWeatherForLocation(lat, lon, name) {
     try {
@@ -53,21 +102,28 @@ async function getWeatherForLocation(lat, lon, name) {
     }
 }
 
-const locations = document.getElementById("locations");
-
-locations.addEventListener("click", async (e) => {
-    const btn = e.target.closest(".location");
-    if (!btn) return;
-
-    const lat = parseFloat(btn.dataset.lat);
-    const lon = parseFloat(btn.dataset.lon);
-    const name = btn.textContent;
-
-    const weather = await getWeatherForLocation(lat, lon, name);
-
+function showWeatherView(name, lat, lon, weather) {
     // Show city name at top
-    cityLabel.textContent = name.toLowerCase();
+    cityLabel.innerHTML = `
+        ${name.toLowerCase()}
+        <button id="fav-toggle" class="fav-btn" title="${isFavorite(name) ? 'Remove from favorites' : 'Add to favorites'}">
+            ${isFavorite(name) ? '★' : '☆'}
+        </button>
+    `;
     cityLabel.style.display = "block";
+
+    // Add favorite toggle functionality
+    document.getElementById("fav-toggle").addEventListener("click", () => {
+        if (isFavorite(name)) {
+            removeFromFavorites(name);
+        } else {
+            addToFavorites(name, lat, lon);
+        }
+        // Update the button
+        const btn = document.getElementById("fav-toggle");
+        btn.textContent = isFavorite(name) ? '★' : '☆';
+        btn.title = isFavorite(name) ? 'Remove from favorites' : 'Add to favorites';
+    });
 
     // Show weather info
     wLat.textContent = lat;
@@ -88,6 +144,20 @@ locations.addEventListener("click", async (e) => {
 
     // Change theme
     document.body.dataset.time = weather.isDay ? "day" : "night";
+}
+
+const locations = document.getElementById("locations");
+
+locations.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".location");
+    if (!btn) return;
+
+    const lat = parseFloat(btn.dataset.lat);
+    const lon = parseFloat(btn.dataset.lon);
+    const name = btn.textContent;
+
+    const weather = await getWeatherForLocation(lat, lon, name);
+    showWeatherView(name, lat, lon, weather);
 });
 
 let asciiInterval; // store interval so we can clear it when switching
@@ -99,8 +169,8 @@ function setWeatherVisuals(weather) {
     if (weather.condition === "RAIN") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
-                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
+            for (let r = 0; r < 50; r++) {
+                for (let c = 0; c < 160; c++) {
                     ascii += Math.random() < 0.3 ? "|" : " ";
                 }
                 ascii += "\n";
@@ -111,8 +181,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "SNOW") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
-                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
+            for (let r = 0; r < 50; r++) {
+                for (let c = 0; c < 160; c++) {
                     ascii += Math.random() < 0.2 ? "*" : " ";
                 }
                 ascii += "\n";
@@ -123,8 +193,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "STORM") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
-                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
+            for (let r = 0; r < 50; r++) {
+                for (let c = 0; c < 160; c++) {
                     ascii += Math.random() < 0.5 ? "|" : " ";
                 }
                 ascii += "\n";
@@ -135,8 +205,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "FOG") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
-                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
+            for (let r = 0; r < 50; r++) {
+                for (let c = 0; c < 160; c++) {
                     ascii += Math.random() < 0.15 ? "░" : " ";
                 }
                 ascii += "\n";
@@ -147,8 +217,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "CLOUDY") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {  // Changed from 30 to 50
-                for (let c = 0; c < 160; c++) {  // Changed from 80 to 150
+            for (let r = 0; r < 50; r++) {
+                for (let c = 0; c < 160; c++) {
                     ascii += Math.random() < 0.1 ? "~" : " ";
                 }
                 ascii += "\n";
@@ -213,9 +283,7 @@ function setWeatherVisuals(weather) {
             }, 500);
         }
     }
-
 }
-
 
 function clearWeatherVisuals() {
     clearInterval(asciiInterval);
@@ -244,7 +312,6 @@ function createFloatingCities() {
         { name: "Buenos Aires", lat: -34.61, lon: -58.38 },
         { name: "Zurich", lat: 47.38, lon: 8.54 },
         { name: "Luxembourg", lat: 49.61, lon: 6.13 },
-
     ];
 
     const container = document.getElementById("locations");
@@ -265,11 +332,12 @@ function createFloatingCities() {
 
         container.appendChild(cityElement);
     });
-
 }
 
 // Start when page loads
 createFloatingCities();
+updateFavoritesPanel();
+
 document.getElementById("back").addEventListener("click", () => {
     cityLabel.style.display = "none";
     infoBox.style.display = "none";

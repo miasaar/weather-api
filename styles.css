@@ -5,7 +5,59 @@
     box-sizing: border-box;
 }
 
+#favourites-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    text-align: right;
+}
 
+#favourites-panel h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-transform: lowercase;
+}
+
+#favourites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.favourite-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    text-transform: lowercase;
+    transition: all 0.2s;
+}
+
+.favourite-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 10px currentColor;
+}
+
+.fav-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    margin-left: 5px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.2s;
+    vertical-align: middle;
+}
+
+.fav-btn:hover {
+    transform: scale(1.2);
+}
 
 body {
     font-family: 'JetBrains Mono', monospace;
@@ -50,6 +102,16 @@ body[data-time="day"] #back {
     background-color: white;
 }
 
+body[data-time="day"] .favourite-item {
+    color: black;
+    border-color: black;
+    background-color: white;
+}
+
+body[data-time="day"] .favourite-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
 body[data-time="night"] {
     background: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
@@ -82,6 +144,12 @@ body[data-time="night"] #back {
     color: rgb(255, 255, 255);
     background-color: black;
     border-color: rgb(255, 255, 255);
+}
+
+body[data-time="night"] .favourite-item {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    border-color: white;
 }
 
 /* ASCII canvas background */
@@ -157,21 +225,24 @@ body[data-time="night"] #back {
 /* city label at top */
 .city-label {
     position: fixed;
-    top: 50px;
+    top: 15vh;
     left: 50%;
     transform: translateX(-50%);
     font-size: 48px;
     padding: 15px 40px;
     border: 2px solid white;
     background: transparent;
-    z-index: 10;
+    z-index: 11;
     text-align: left;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
 /* info box */
 .info-box {
     position: fixed;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 30px 40px;
@@ -195,6 +266,14 @@ body[data-time="night"] #back {
     border: 2px solid white;
     color: white;
     z-index: 10;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#back:hover {
+    background: rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 10px currentColor;
+    transform: translateX(-5px);
 }
 
 * {

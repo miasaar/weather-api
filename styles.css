@@ -39,8 +39,9 @@
 }
 
 .favourite-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    text-shadow: 0 0 10px currentColor;
+    background: transparent;
+    text-shadow: 5px 5px 20px currentColor;
+    transform: scale(1.1);
 }
 
 .fav-btn {
@@ -263,7 +264,7 @@ body[data-time="night"] .favourite-item {
     font-size: 20px;
     padding: 10px 20px;
     background: transparent;
-    border: 2px solid white;
+    border: 1px solid white;
     color: white;
     z-index: 10;
     cursor: pointer;
@@ -273,7 +274,7 @@ body[data-time="night"] .favourite-item {
 #back:hover {
     background: rgba(255, 255, 255, 0.1);
     text-shadow: 0 0 10px currentColor;
-    transform: translateX(-5px);
+    transform: scale(1.1);
 }
 
 * {

@@ -334,6 +334,59 @@ function createFloatingCities() {
     });
 }
 
+// Keyboard navigation
+let cityElements = [];
+let currentFocusIndex = -1;
+
+function updateCityElements() {
+    cityElements = Array.from(document.querySelectorAll('.location, .favourite-item'));
+}
+
+function focusCity(index) {
+    if (cityElements.length === 0) return;
+
+    // Remove previous focus
+    cityElements.forEach(el => el.style.outline = 'none');
+
+    // Wrap around
+    if (index < 0) index = cityElements.length - 1;
+    if (index >= cityElements.length) index = 0;
+
+    currentFocusIndex = index;
+
+    // Add focus indicator
+    cityElements[index].style.outline = '3px solid white';
+    cityElements[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+document.addEventListener('keydown', (e) => {
+    // If we're viewing a city, only allow Escape to go back
+    if (infoBox.style.display === 'block') {
+        if (e.key === 'Escape') {
+            document.getElementById("back").click();
+        }
+        return;
+    }
+
+    // Update city elements list
+    updateCityElements();
+
+    // Arrow navigation
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        focusCity(currentFocusIndex + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        focusCity(currentFocusIndex - 1);
+    } else if (e.key === 'Enter' && currentFocusIndex >= 0) {
+        e.preventDefault();
+        cityElements[currentFocusIndex].click();
+    } else if (e.key === 'Tab') {
+        e.preventDefault();
+        focusCity(currentFocusIndex + 1);
+    }
+});
+
 // Start when page loads
 createFloatingCities();
 updateFavoritesPanel();
@@ -345,4 +398,5 @@ document.getElementById("back").addEventListener("click", () => {
     document.getElementById("locations").style.display = "block";
     clearWeatherVisuals();
     document.body.removeAttribute("data-time");
+    currentFocusIndex = -1;
 });

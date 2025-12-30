@@ -66,6 +66,7 @@ body {
     color: white;
     height: 100vh;
     overflow: hidden;
+    min-width: 1440px;
 }
 
 /* For day/night theme switching */

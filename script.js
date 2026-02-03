@@ -167,8 +167,8 @@ function setWeatherVisuals(weather) {
     const canvas = document.getElementById("ascii-canvas");
 
     // Calculate rows and cols based on screen size
-    const rows = 100;  // Way more rows
-    const cols = 300;  // Way more columns // Added +5 for safety
+    const rows = 500;  // Way more rows
+    const cols = 800;  // Way more columns // Added +5 for safety
 
     if (weather.condition === "RAIN") {
         asciiInterval = setInterval(() => {

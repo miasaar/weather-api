@@ -169,7 +169,6 @@ function setWeatherVisuals(weather) {
     const computedStyle = getComputedStyle(canvas);
     const fontSize = parseFloat(computedStyle.fontSize);
     const lineHeight = fontSize * 1.2;
-    // Calculate rows and cols based on screen size
     const rows = 80;  // Way more rows
     const cols = 200;  // Way more columns // Added +5 for safety
 

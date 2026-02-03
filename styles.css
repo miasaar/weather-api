@@ -159,20 +159,29 @@ body[data-time="night"] .favourite-item {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    /* Force viewport width */
-    height: 100vh;
-    /* Force viewport height */
-    min-width: 100vw;
-    /* Add this */
-    min-height: 100vh;
-    /* Add this */
+    width: 100%;
+    height: 100%;
     white-space: pre;
     font-size: 14px;
     line-height: 1.2;
     color: white;
     pointer-events: none;
-    overflow: hidden;
+}
+
+/* For larger screens (1920px and above) */
+@media (min-width: 1920px) {
+    #ascii-canvas {
+        font-size: 10px;
+        /* Smaller font = more characters fit */
+    }
+}
+
+/* For extra large screens (2240px and above) */
+@media (min-width: 2240px) {
+    #ascii-canvas {
+        font-size: 8px;
+        /* Even smaller */
+    }
 }
 
 /* floating city names */

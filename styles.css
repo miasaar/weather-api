@@ -159,13 +159,20 @@ body[data-time="night"] .favourite-item {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    /* Force viewport width */
+    height: 100vh;
+    /* Force viewport height */
+    min-width: 100vw;
+    /* Add this */
+    min-height: 100vh;
+    /* Add this */
     white-space: pre;
     font-size: 14px;
     line-height: 1.2;
     color: white;
     pointer-events: none;
+    overflow: hidden;
 }
 
 /* floating city names */

@@ -254,6 +254,7 @@ body[data-time="night"] .favourite-item {
     font-size: 18px;
     text-align: left;
     line-height: 2;
+    margin: 10px;
 }
 
 /* back btn */

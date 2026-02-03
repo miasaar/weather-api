@@ -166,11 +166,15 @@ function setWeatherVisuals(weather) {
     clearWeatherVisuals();
     const canvas = document.getElementById("ascii-canvas");
 
+    // Calculate rows and cols based on screen size
+    const rows = Math.ceil(window.innerHeight / 19) + 2;  // Added +2 for safety
+    const cols = Math.ceil(window.innerWidth / 9.6) + 5;  // Added +5 for safety
+
     if (weather.condition === "RAIN") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {
-                for (let c = 0; c < 160; c++) {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.3 ? "|" : " ";
                 }
                 ascii += "\n";
@@ -181,8 +185,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "SNOW") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {
-                for (let c = 0; c < 160; c++) {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.2 ? "*" : " ";
                 }
                 ascii += "\n";
@@ -193,8 +197,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "STORM") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {
-                for (let c = 0; c < 160; c++) {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.5 ? "|" : " ";
                 }
                 ascii += "\n";
@@ -205,8 +209,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "FOG") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {
-                for (let c = 0; c < 160; c++) {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.15 ? "░" : " ";
                 }
                 ascii += "\n";
@@ -217,8 +221,8 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "CLOUDY") {
         asciiInterval = setInterval(() => {
             let ascii = "";
-            for (let r = 0; r < 50; r++) {
-                for (let c = 0; c < 160; c++) {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.1 ? "~" : " ";
                 }
                 ascii += "\n";
@@ -227,8 +231,6 @@ function setWeatherVisuals(weather) {
         }, 180);
     }
     else if (weather.condition === "CLEAR") {
-        const rows = 50;
-        const cols = 160;
         const sunArt = [
             "      ;   :   ;",
             "   .   \\_,!,_/   ,",
@@ -242,35 +244,28 @@ function setWeatherVisuals(weather) {
         ];
 
         if (weather.isDay) {
-            // Initialize a single sun starting somewhere
-            let sun = { row: 5, col: 5 }; // top-left starting position
+            let sun = { row: 5, col: 5 };
 
             asciiInterval = setInterval(() => {
-                // Create empty canvas
                 let ascii = Array(rows).fill("").map(() => " ".repeat(cols));
 
-                // Overlay sunArt onto ascii canvas
                 sunArt.forEach((line, i) => {
                     const r = sun.row + i;
                     if (r < rows) {
                         let base = ascii[r].split("");
                         for (let c = 0; c < line.length; c++) {
-                            const colPos = (sun.col + c) % cols; // wrap horizontally
+                            const colPos = (sun.col + c) % cols;
                             base[colPos] = line[c];
                         }
                         ascii[r] = base.join("");
                     }
                 });
 
-                // Update sun position (move right)
                 sun.col = (sun.col + 1) % cols;
-
-                // Render
                 canvas.textContent = ascii.join("\n");
             }, 200);
 
         } else {
-            // Night stars
             asciiInterval = setInterval(() => {
                 let ascii = "";
                 for (let r = 0; r < rows; r++) {

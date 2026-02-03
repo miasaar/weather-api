@@ -166,9 +166,6 @@ function setWeatherVisuals(weather) {
     clearWeatherVisuals();
     const canvas = document.getElementById("ascii-canvas");
     // Get actual font size from CSS
-    const computedStyle = getComputedStyle(canvas);
-    const fontSize = parseFloat(computedStyle.fontSize);
-    const lineHeight = fontSize * 1.2;
     const rows = 80;  // Way more rows
     const cols = 200;  // Way more columns // Added +5 for safety
 

@@ -165,9 +165,10 @@ let asciiInterval; // store interval so we can clear it when switching
 function setWeatherVisuals(weather) {
     clearWeatherVisuals();
     const canvas = document.getElementById("ascii-canvas");
-    // Get actual font size from CSS
-    const rows = 80;  // Way more rows
-    const cols = 200;  // Way more columns // Added +5 for safety
+
+    // Calculate rows and cols based on screen size
+    const rows = Math.ceil(window.innerHeight / 19) + 2;  // Added +2 for safety
+    const cols = Math.ceil(window.innerWidth / 9.6) + 5;  // Added +5 for safety
 
     if (weather.condition === "RAIN") {
         asciiInterval = setInterval(() => {

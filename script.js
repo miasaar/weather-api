@@ -287,6 +287,7 @@ function setWeatherVisuals(weather) {
             // Night stars
             asciiInterval = setInterval(() => {
                 let ascii = "";
+                const { rows, cols } = getCanvasDimensions();
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
                         ascii += Math.random() < 0.1 ? "★" : " ";

@@ -7,6 +7,15 @@ const wTemp = document.getElementById("w-temp");
 const wCode = document.getElementById("w-code");
 const wDay = document.getElementById("w-day");
 
+function getCanvasDimensions() {
+    // At font-size 12px with line-height 1.2, each row is ~14.4px tall
+    // Each character in JetBrains Mono at 12px is ~7.2px wide
+    const charWidth = 7.2;
+    const charHeight = 14.4;
+    const cols = Math.ceil(window.innerWidth / charWidth);
+    const rows = Math.ceil(window.innerHeight / charHeight);
+    return { rows, cols };
+}
 // Favorites management
 let favorites = JSON.parse(localStorage.getItem('weatherFavorites')) || [];
 
@@ -166,13 +175,10 @@ function setWeatherVisuals(weather) {
     clearWeatherVisuals();
     const canvas = document.getElementById("ascii-canvas");
 
-    // Calculate rows and cols based on screen size
-    const rows = Math.ceil(window.innerHeight / 19) + 2;  // Added +2 for safety
-    const cols = Math.ceil(window.innerWidth / 9.6) + 5;  // Added +5 for safety
-
     if (weather.condition === "RAIN") {
         asciiInterval = setInterval(() => {
             let ascii = "";
+            const { rows, cols } = getCanvasDimensions();
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.3 ? "|" : " ";
@@ -185,6 +191,7 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "SNOW") {
         asciiInterval = setInterval(() => {
             let ascii = "";
+            const { rows, cols } = getCanvasDimensions();
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.2 ? "*" : " ";
@@ -197,6 +204,7 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "STORM") {
         asciiInterval = setInterval(() => {
             let ascii = "";
+            const { rows, cols } = getCanvasDimensions();
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.5 ? "|" : " ";
@@ -209,6 +217,7 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "FOG") {
         asciiInterval = setInterval(() => {
             let ascii = "";
+            const { rows, cols } = getCanvasDimensions();
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.15 ? "░" : " ";
@@ -221,6 +230,7 @@ function setWeatherVisuals(weather) {
     else if (weather.condition === "CLOUDY") {
         asciiInterval = setInterval(() => {
             let ascii = "";
+            const { rows, cols } = getCanvasDimensions();
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     ascii += Math.random() < 0.1 ? "~" : " ";
@@ -231,6 +241,8 @@ function setWeatherVisuals(weather) {
         }, 180);
     }
     else if (weather.condition === "CLEAR") {
+        const rows = 50;
+        const cols = 160;
         const sunArt = [
             "      ;   :   ;",
             "   .   \\_,!,_/   ,",
@@ -244,28 +256,35 @@ function setWeatherVisuals(weather) {
         ];
 
         if (weather.isDay) {
-            let sun = { row: 5, col: 5 };
+            // Initialize a single sun starting somewhere
+            let sun = { row: 5, col: 5 }; // top-left starting position
 
             asciiInterval = setInterval(() => {
+                // Create empty canvas
                 let ascii = Array(rows).fill("").map(() => " ".repeat(cols));
 
+                // Overlay sunArt onto ascii canvas
                 sunArt.forEach((line, i) => {
                     const r = sun.row + i;
                     if (r < rows) {
                         let base = ascii[r].split("");
                         for (let c = 0; c < line.length; c++) {
-                            const colPos = (sun.col + c) % cols;
+                            const colPos = (sun.col + c) % cols; // wrap horizontally
                             base[colPos] = line[c];
                         }
                         ascii[r] = base.join("");
                     }
                 });
 
+                // Update sun position (move right)
                 sun.col = (sun.col + 1) % cols;
+
+                // Render
                 canvas.textContent = ascii.join("\n");
             }, 200);
 
         } else {
+            // Night stars
             asciiInterval = setInterval(() => {
                 let ascii = "";
                 for (let r = 0; r < rows; r++) {

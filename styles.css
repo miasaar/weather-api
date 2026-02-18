@@ -159,16 +159,16 @@ body[data-time="night"] .favourite-item {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     /* Force viewport width */
-    height: 100vh;
+    height: 100%;
     /* Force viewport height */
-    min-width: 100vw;
+    min-width: 100%;
     /* Add this */
-    min-height: 100vh;
+    min-height: 100%;
     /* Add this */
     white-space: pre;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.2;
     color: white;
     pointer-events: none;
